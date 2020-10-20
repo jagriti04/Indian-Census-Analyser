@@ -3,7 +3,7 @@ package censusanalyser;
 public class CensusAnalyserException extends Exception {
 
     enum ExceptionType {
-        CENSUS_FILE_PROBLEM,
+        CENSUS_FILE_PROBLEM, WRONG_DELIMITER_FILE,
         UNABLE_TO_PARSE;
     }
 
