@@ -17,6 +17,7 @@ public class CensusAnalyserTest {
     private static final String WRONG_STATE_CODE_FILE_PATH = "./src/main/resources/IndiaStateCode.csv";
     private static final String WRONG_STATE_CODE_FILE_TYPE = "./src/test/resources/IndiaStateCode.txt";
     private static final String INDIA_STATE_CODE_WRONG_DELIMITER = "/src/test/resources/IndiaStateCodeWrongDelimiter.csv";
+    private static final String INDIA_STATE_CODE_WRONG_HEADER = "/src/test/resources/IndiaStateCodeWrongHeader";
 
     // TC 1.1
     @Test
@@ -128,6 +129,19 @@ public class CensusAnalyserTest {
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
             censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_WRONG_DELIMITER);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.STATE_CODE_FILE_PROBLEM, e.type);
+        }
+    }
+
+    // TC 1.5 (Wrong header)
+    @Test
+    public void givenIndiaStateCode_withWrongHeader_shouldThrowException() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            ExpectedException exceptionRule = ExpectedException.none();
+            exceptionRule.expect(CensusAnalyserException.class);
+            censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_WRONG_HEADER);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.STATE_CODE_FILE_PROBLEM, e.type);
         }
