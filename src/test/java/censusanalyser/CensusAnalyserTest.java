@@ -13,7 +13,8 @@ public class CensusAnalyserTest {
     private static final String INDIA_CENSUS_CSV_WRONG_HEADER = "./src/test/resources/IndiaStateCensusWrongHeader.csv";
 
     // UC2 files path
-    private static final String INDIA_STATE_CODE_CSE_FILE = "./src/test/resources/IndiaStateCode.csv";
+    private static final String INDIA_STATE_CODE_CSV_FILE = "./src/test/resources/IndiaStateCode.csv";
+    private static final String WRONG_STATE_CODE_FILE_PATH = "./src/main/resources/IndiaStateCode.csv";
 
     // TC 1.1
     @Test
@@ -84,12 +85,23 @@ public class CensusAnalyserTest {
     public void givenIndianStateCodeCSVFile_shouldReturnCorrectRecordsCount() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            int numOfRecords = censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_CSE_FILE);
-            System.out.println(numOfRecords);
+            int numOfRecords = censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_CSV_FILE);
             Assert.assertEquals(37, numOfRecords);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
     }
 
+    // UC2 TC 1.2
+    @Test
+    public void givenIndiaStateCodeData_withWrongFile_shouldThrowException() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            ExpectedException exceptionRule = ExpectedException.none();
+            exceptionRule.expect(CensusAnalyserException.class);
+            censusAnalyser.loadIndiaStateCode(WRONG_STATE_CODE_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.STATE_CODE_FILE_PROBLEM, e.type);
+        }
+    }
 }
