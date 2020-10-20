@@ -12,20 +12,24 @@ public class CensusAnalyserTest {
     private static final String INDIA_CENSUS_CSV_WRONG_DELIMITER = "./src/test/resources/IndiaStateCensusWrong.csv";
     private static final String INDIA_CENSUS_CSV_WRONG_HEADER = "./src/test/resources/IndiaStateCensusWrongHeader.csv";
 
+    // UC2 files path
+    private static final String INDIA_STATE_CODE_CSE_FILE = "./src/test/resources/IndiaStateCode.csv";
+
     // TC 1.1
     @Test
-    public void givenIndianCensusCSVFileReturnsCorrectRecords() {
+    public void givenIndianCensusCSVFile_returnsCorrectRecords() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             int numOfRecords = censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
             Assert.assertEquals(29, numOfRecords);
         } catch (CensusAnalyserException e) {
+            e.printStackTrace();
         }
     }
 
     // TC 1.2
     @Test
-    public void givenIndiaCensusData_WithWrongFile_ShouldThrowException() {
+    public void givenIndiaCensusData_withWrongFile_shouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
@@ -38,7 +42,7 @@ public class CensusAnalyserTest {
 
     // TC 1.3
     @Test
-    public void givenIndiaCensusData_WithWrongFileType_ShouldThrowException() {
+    public void givenIndiaCensusData_withWrongFileType_shouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
@@ -51,7 +55,7 @@ public class CensusAnalyserTest {
 
     // TC 1.4
     @Test
-    public void givenIndiaCensusData_WithWrongDelimiterFile_ShouldThrowException() {
+    public void givenIndiaCensusData_withWrongDelimiterFile_shouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
@@ -64,7 +68,7 @@ public class CensusAnalyserTest {
 
     // TC 1.5 (Wrong header)
     @Test
-    public void givenIndiaCensusData_WithWrongHeader_ShouldThrowException() {
+    public void givenIndiaCensusData_withWrongHeader_shouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
@@ -72,6 +76,19 @@ public class CensusAnalyserTest {
             censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_WRONG_HEADER);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.WRONG_CENSUS_CSV_FILE, e.type);
+        }
+    }
+
+    // UC2 TC 1.1
+    @Test
+    public void givenIndianStateCodeCSVFile_shouldReturnCorrectRecordsCount() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            int numOfRecords = censusAnalyser.loadIndiaStateCode(INDIA_STATE_CODE_CSE_FILE);
+            System.out.println(numOfRecords);
+            Assert.assertEquals(37, numOfRecords);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
         }
     }
 
