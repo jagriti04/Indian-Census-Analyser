@@ -1,6 +1,6 @@
 package censusanalyser;
 
-public class CensusAnalyserException extends Exception {
+public class CSVException extends Exception {
 
     enum ExceptionType {
         CENSUS_FILE_PROBLEM, WRONG_CENSUS_CSV_FILE,
@@ -10,12 +10,12 @@ public class CensusAnalyserException extends Exception {
 
     ExceptionType type;
 
-    public CensusAnalyserException(String message, ExceptionType type) {
+    public CSVException(String message, ExceptionType type) {
         super(message);
         this.type = type;
     }
 
-    public CensusAnalyserException(String message, ExceptionType type, Throwable cause) {
+    public CSVException(String message, ExceptionType type, Throwable cause) {
         super(message, cause);
         this.type = type;
     }
