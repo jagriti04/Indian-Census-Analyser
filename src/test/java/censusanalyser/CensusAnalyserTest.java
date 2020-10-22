@@ -147,4 +147,15 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CSVException.ExceptionType.STATE_CODE_FILE_PROBLEM, e.type);
         }
     }
+
+    @Test
+    public void givenIndianStateCodeCSVFile_usingCommonCSV_shouldReturnCorrectRecordsCount() {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            int numOfRecords = censusAnalyser.loadIndiaStateCodeUsingCommon(INDIA_STATE_CODE_CSV_FILE);
+            Assert.assertEquals(37, numOfRecords);
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
