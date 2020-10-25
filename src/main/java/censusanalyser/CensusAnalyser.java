@@ -75,6 +75,7 @@ public class CensusAnalyser {
         return sortedStateCensusJson;
     }
 
+    //Descending order sorting
     public String getPopulationWiseSortedCensusData() throws CSVException {
         if (censusCSVList == null || censusCSVList.size() == 0) {
             throw new CSVException("No Census Data", CSVException.ExceptionType.NO_CENSUS_DATA);
@@ -85,6 +86,7 @@ public class CensusAnalyser {
         return sortedPopulationCensusJson;
     }
 
+    //Descending order sorting
     public String getPopulationDensityWiseSortedCensusData() throws CSVException {
         if (censusCSVList == null || censusCSVList.size() == 0) {
             throw new CSVException("No Census Data", CSVException.ExceptionType.NO_CENSUS_DATA);
@@ -93,6 +95,17 @@ public class CensusAnalyser {
         this.descendingOrderSort(censusComparator, censusCSVList);
         String sortedPopulationDensityCensusJson = new Gson().toJson(censusCSVList);
         return sortedPopulationDensityCensusJson;
+    }
+
+    //Descending order sorting
+    public  String getAreaWiseSortedCensusData() throws CSVException {
+        if (censusCSVList == null || censusCSVList.size() == 0) {
+            throw new CSVException("No Census Data", CSVException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusCSV> censusComparator = Comparator.comparing((census -> census.areaInSqKm));
+        this.descendingOrderSort(censusComparator, censusCSVList);
+        String sortedAreaCensusData = new Gson().toJson(censusCSVList);
+        return sortedAreaCensusData;
     }
 
     public String getStateCodeWiseSortedStateCodeData() throws CSVException {
@@ -106,26 +119,26 @@ public class CensusAnalyser {
     }
 
     private <E> void sort(Comparator<E> comparator, List<E> list) {
-        for (int i = 0; i<list.size() - 1; i++) {
-            for (int j=0; j<list.size()-i-1; j++) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = 0; j < list.size() - i - 1; j++) {
                 E census1 = list.get(j);
-                E census2 = list.get(j+1);
-                if (comparator.compare(census1, census2) >0) {
+                E census2 = list.get(j + 1);
+                if (comparator.compare(census1, census2) > 0) {
                     list.set(j, census2);
-                    list.set(j+1, census1);
+                    list.set(j + 1, census1);
                 }
             }
         }
     }
 
     private <E> void descendingOrderSort(Comparator<E> comparator, List<E> list) {
-        for (int i = 0; i<list.size() - 1; i++) {
-            for (int j=0; j<list.size()-i-1; j++) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = 0; j < list.size() - i - 1; j++) {
                 E census1 = list.get(j);
-                E census2 = list.get(j+1);
-                if (comparator.compare(census1, census2) <0) {
+                E census2 = list.get(j + 1);
+                if (comparator.compare(census1, census2) < 0) {
                     list.set(j, census2);
-                    list.set(j+1, census1);
+                    list.set(j + 1, census1);
                 }
             }
         }
