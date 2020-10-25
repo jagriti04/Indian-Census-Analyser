@@ -85,6 +85,16 @@ public class CensusAnalyser {
         return sortedPopulationCensusJson;
     }
 
+    public String getPopulationDensityWiseSortedCensusData() throws CSVException {
+        if (censusCSVList == null || censusCSVList.size() == 0) {
+            throw new CSVException("No Census Data", CSVException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusCSV> censusComparator = Comparator.comparing((census -> census.densityPerSqKm));
+        this.descendingOrderSort(censusComparator, censusCSVList);
+        String sortedPopulationDensityCensusJson = new Gson().toJson(censusCSVList);
+        return sortedPopulationDensityCensusJson;
+    }
+
     public String getStateCodeWiseSortedStateCodeData() throws CSVException {
         if (stateCodeCSVList == null || stateCodeCSVList.size() == 0) {
             throw new CSVException("No state code Data", CSVException.ExceptionType.NO_STATE_CODE_DATA);
