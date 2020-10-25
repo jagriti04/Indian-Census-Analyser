@@ -1,6 +1,7 @@
 package censusanalyser;
 
 import com.bl.csvbuilder.CSVException;
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -157,5 +158,15 @@ public class CensusAnalyserTest {
         } catch (CSVException e) {
             e.printStackTrace();
         }
+    }
+
+    //UC3 State Alphabetical order
+    @Test
+    public void givenIndianCensusData_whenSortedOnState_shouldReturnSortedResult() throws CSVException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        String sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
+        IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+        Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
     }
 }
