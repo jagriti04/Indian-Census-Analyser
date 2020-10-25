@@ -221,4 +221,25 @@ public class CensusAnalyserTest {
         IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
         Assert.assertEquals("Arunachal Pradesh", censusCSV[28].state);
     }
+
+    //UC7 Sorting from Largest State by Area to the smallest state
+    // check for Largest State by Area
+    @Test
+    public void givenIndianCensusData_whenSortedOnArea_shouldReturnSortedResult_checkFirst() throws CSVException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        String sortedCensusData = censusAnalyser.getAreaWiseSortedCensusData();
+        IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+        Assert.assertEquals("Rajasthan", censusCSV[0].state);
+    }
+
+    // check for Smallest State by Area
+    @Test
+    public void givenIndianCensusData_whenSortedOnArea_shouldReturnSortedResult_checkLast() throws CSVException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        String sortedCensusData = censusAnalyser.getAreaWiseSortedCensusData();
+        IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+        Assert.assertEquals("Goa", censusCSV[28].state);
+    }
 }
