@@ -179,4 +179,25 @@ public class CensusAnalyserTest {
         IndiaStateCodeCSV[] stateCodeCSV = new Gson().fromJson(sortedStateCodeData, IndiaStateCodeCSV[].class);
         Assert.assertEquals("AD", stateCodeCSV[0].stateCode);
     }
+
+    //UC5 Sorting from most populous state to the least on
+    // check for most populous state
+    @Test
+    public void givenIndianCensusData_whenSortedOnPopulation_shouldReturnSortedResult() throws CSVException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        String sortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
+        IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+        Assert.assertEquals("Uttar Pradesh", censusCSV[0].state);
+    }
+
+    // check for least populous state
+    @Test
+    public void givenIndianCensusData_whenSortedOnPopulation_shouldReturnSortedResult_checkLast() throws CSVException {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        String sortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
+        IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+        Assert.assertEquals("Sikkim", censusCSV[28].state);
+    }
 }
